@@ -1,37 +1,50 @@
-// Initializing Variables 1-12
-var questionNumber = 0;
-var rightCount = 0;
-var leftCount = 0;
-var secondsLeft = 60;
-var gameStarted = false;
-var question = document.querySelector("#question");
-var answer1 = document.querySelector("#answer1");
-var answer2 = document.querySelector("#answer2");
-var answer3 = document.querySelector("#answer3");
-var answer4 = document.querySelector("#answer4");
-var highscoreBtn = document.querySelector("#highscorebtn");
+// Initializing Variables 
+let questionNumber = 0;
+let rightCount = 0;
+let wrongCount = 0;
+let secondsLeft = 10;
+let gameStarted = false;
+let gameEnded = false;
+let question = document.querySelector("#question");
+let answer1 = document.querySelector("#answer1");
+let answer2 = document.querySelector("#answer2");
+let answer3 = document.querySelector("#answer3");
+let answer4 = document.querySelector("#answer4");
+let secondText = document.querySelector("#secondtext");
+let startScreen = document.getElementById("startscreen");
+let mainGameEl = document.getElementById("maingame");
+let highscoreBtn = document.querySelector("#highscorebtn");
+let quizStartBtn = document.querySelector("#quiztext");
+mainGameEl.hidden = true;
 
 
 // Event listeners 15-20
 answer1.addEventListener("click", answer1click);
+quizStartBtn.addEventListener("click", startquiz);
 highscoreBtn.addEventListener("click", highscore);
 answer2.addEventListener("click", answer2click);
 answer3.addEventListener("click", answer3click);
 answer4.addEventListener("click", answer4click);
 
+function startquiz() {
+    startTimer();
+    startScreen.hidden = true;
+    mainGameEl.hidden = false;
+    console.log("clicked.");
+    mainGameEl.style.display = 'abosolute';
 
-// Drawing questions. I wanted to use a for loop, but I'm not sure how since the id's are different in every line. 22-26
+}
 
 
-// Constructing arrays. 27-66
+// Constructing arrays. 
 const questions = [
     "How many eggs are in a dozen?",
     "What color is grass?",
     "Whats 10 * 10?",
     "What color is the sky?",
     "Who's a good grader?",
-    "is .Stringify() a function or method?",
-]
+    "5+5+5+5+12+12=?"
+];
 
 const answersquestionone = [
     "4",
@@ -64,7 +77,13 @@ const answersquestionfive = [
     "I am!",
     "Whoever gives this homework a C",
 ];
-// Drawing answers + question. Wanted to put on top, but cannot use before arrays have been initialized. 68-72
+const answersquestionsix = [
+    "44",
+    "22",
+    "452",
+    "42",
+];
+// Drawing answers + question. Wanted to put on top, but cannot use before arrays have been initialized. 
 question.innerHTML = questions[questionNumber];
 answer1.innerHTML = answersquestionone[0];
 answer2.innerHTML = answersquestionone[1];
@@ -76,20 +95,14 @@ function startTimer() {
     setInterval(minustimer, 1000);
 }
 
-// Functions full of if statemtns for each button.  (4 in total.)
+// Functions full of if statements for each button.  (4 in total.)
 // Answer button 1
 function answer1click() {
-    if (questionNumber == 0) {
+    if (questionNumber == 0 || questionNumber == 3 || questionNumber == 2 || questionNumber == 1 || questionNumber == 4) {
         wrong();
     }
-    if (questionNumber == 1) {
-        wrong();
-    }
-    if (questionNumber == 2) {
-        wrong();
-    }
-    if (questionNumber == 3) {
-        wrong();
+    if (questionNumber == 5) {
+        gameEnd();
     }
     
 questionNumber++;
@@ -98,20 +111,14 @@ drawquestions();
 
 // Answer button 2
 function answer2click() {
-    if (questionNumber == 0) {
-        wrong();
-    }
-    if (questionNumber == 1) {
+    if (questionNumber == 1 || questionNumber == 3) {
         right();
     }
-    if (questionNumber == 2) {
+    if (questionNumber == 2 || questionNumber == 4 || questionNumber == 0) {
         wrong();
     }
-    if (questionNumber == 3) {
-        right();
-    }
-    if (questionNumber == 4) {
-        wrong();
+    if (questionNumber == 5) {
+        gameEnd();
     }
     questionNumber++;
     drawquestions();
@@ -119,20 +126,14 @@ function answer2click() {
 }
 // Answer button 3
 function answer3click() {
-    if (questionNumber == 0) {
+    if (questionNumber == 0 || questionNumber == 2 || questionNumber == 4) {
         right();
     }
-    if (questionNumber == 1) {
+    if (questionNumber == 1 || questionNumber == 3) {
         wrong();
     }
-    if (questionNumber == 2) {
-        right();
-    }
-    if (questionNumber == 3) {
-        wrong();
-    }
-    if (questionNumber == 4) {
-        wrong();
+    if (questionNumber == 5) {
+        gameEnd();
     }
     questionNumber++;
     drawquestions();
@@ -140,20 +141,11 @@ function answer3click() {
 }
 // Answer button 4.
 function answer4click() {
-    if (questionNumber == 0) {
+    if (questionNumber == 0 || questionNumber == 1 || questionNumber == 2 || questionNumber == 3 || questionNumber == 4) {
         wrong();
     }
-    if (questionNumber == 1) {
-        wrong();
-    }
-    if (questionNumber == 2) {
-        wrong();
-    }
-    if (questionNumber == 3) {
-        wrong();
-    }
-    if (questionNumber == 4) {
-        right();
+    if (questionNumber == 5) {
+        gameEnd();
     }
     questionNumber++;
     drawquestions();
@@ -161,31 +153,43 @@ function answer4click() {
 }
 // Function that gets called when wrong answer happens.
 function wrong() {
+    wrongCount++;
 console.log("wrong")
 document.querySelector("#wrongNotif").innerHTML = "WRONG!";
 setTimeout(() => {  document.querySelector("#wrongNotif").innerHTML = ""; }, 700);
-rightCount++;
 }
-
+var slot1 = "";
+var slot2 = "";
+var slot3 = "";
+var slot4 = "";
 function highscore() {
-    console.log("worked")
+    alert(slot1+"\n"+slot2+"\n"+slot3+"\nu"+slot4);
     }
 
 
     // Function that gets called when right answer happens.
 function right() {
+    rightCount++;
     console.log("right")
 document.querySelector("#rightNotif").innerHTML = "CORRECT!!";
 setTimeout(() => {  document.querySelector("#rightNotif").innerHTML = ""; }, 700);
-rightCount++;
     }
 
-
-    // Starts on game start
+function gameEnd() {
+    alert("Quiz Over! Your ended with " + secondsLeft + " seconds left. " + rightCount + " questions correct and " + wrongCount + " questions wrong.");
+    var test = prompt("Please enter your initials to save your highscore.","")
+        gameEnded = true;
+    
+}
+    // 
 function minustimer() {
-    if (secondsLeft > 0) {
-    secondsLeft--;
+    if (secondsLeft > 0 && gameEnded == false) {
+        secondsLeft--;
     document.querySelector("#seconds").innerHTML = secondsLeft;
+    if (secondsLeft == 0) {
+        document.querySelector("#seconds").innerHTML = secondsLeft;
+        gameEnd();
+    }
     }
 }
 
@@ -227,6 +231,13 @@ function drawquestions() {
         answer2.innerHTML = answersquestionfive[1];
         answer3.innerHTML = answersquestionfive[2];
         answer4.innerHTML = answersquestionfive[3];
+    }
+    if (questionNumber == 5) {
+        question.innerHTML = questions[questionNumber];
+        answer1.innerHTML = answersquestionsix[0];
+        answer2.innerHTML = answersquestionsix[1];
+        answer3.innerHTML = answersquestionsix[2]
+        answer4.innerHTML = answersquestionsix[3];
     }
     
 }
