@@ -189,7 +189,9 @@ function gameEnd() {
     gameEnded = true;
     GameEndedlongnumber++;
     if (GameEndedlongnumber == 1) {
-    setTimeout(() => {  var initials = prompt("Please enter your initials to save your highscore.") 
+    setTimeout(() => { 
+        alert("Quiz Over! You ended with " + secondsLeft + " seconds left. " + rightCount + " questions correct and " + wrongCount + " questions wrong."); 
+        var initials = prompt("Please enter your initials to save your highscore.") 
     localStorage.setItem("initials", JSON.stringify(initials));
 }, 500);
 
