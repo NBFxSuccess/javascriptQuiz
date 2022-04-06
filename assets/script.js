@@ -2,6 +2,7 @@
 let questionNumber = 0;
 let rightCount = 0;
 let wrongCount = 0;
+let stopTimer = false;
 let secondsLeft = 10;
 let gameStarted = false;
 let gameEnded = false;
@@ -14,18 +15,23 @@ let secondText = document.querySelector("#secondtext");
 let startScreen = document.getElementById("startscreen");
 let mainGameEl = document.getElementById("maingame");
 let highscoreBtn = document.querySelector("#highscorebtn");
+let clearscoreBtn = document.querySelector("#clearscorebtn");
 let quizStartBtn = document.querySelector("#quiztext");
 mainGameEl.hidden = true;
-
 
 // Event listeners 15-20
 answer1.addEventListener("click", answer1click);
 quizStartBtn.addEventListener("click", startquiz);
 highscoreBtn.addEventListener("click", highscore);
+clearscoreBtn.addEventListener("click", clearscore);
 answer2.addEventListener("click", answer2click);
 answer3.addEventListener("click", answer3click);
 answer4.addEventListener("click", answer4click);
 
+function clearscore() {
+    console.log("cleared score")
+localStorage.clear()
+}
 function startquiz() {
     startTimer();
     startScreen.hidden = true;
@@ -34,8 +40,6 @@ function startquiz() {
     mainGameEl.style.display = 'abosolute';
 
 }
-
-
 // Constructing arrays. 
 const questions = [
     "How many eggs are in a dozen?",
@@ -45,7 +49,6 @@ const questions = [
     "Who's a good grader?",
     "5+5+5+5+12+12=?"
 ];
-
 const answersquestionone = [
     "4",
     "18",
@@ -154,16 +157,23 @@ function answer4click() {
 // Function that gets called when wrong answer happens.
 function wrong() {
     wrongCount++;
+    if (secondsLeft > 2) {
+    secondsLeft--;
+    }
 console.log("wrong")
 document.querySelector("#wrongNotif").innerHTML = "WRONG!";
 setTimeout(() => {  document.querySelector("#wrongNotif").innerHTML = ""; }, 700);
 }
-var slot1 = "";
-var slot2 = "";
-var slot3 = "";
-var slot4 = "";
+
 function highscore() {
-    alert(slot1+"\n"+slot2+"\n"+slot3+"\nu"+slot4);
+    var slot1 = localStorage.getItem("initials");
+var slot2 = localStorage.getItem("secondsleft");
+var slot3 = localStorage.getItem("rightcount");
+var slot4 = localStorage.getItem("wrongcount");
+    localStorage.setItem("secondsleft", JSON.parse(secondsLeft));
+    localStorage.setItem("rightcount", JSON.parse(rightCount));
+    localStorage.setItem("wrongcount", JSON.parse(wrongCount));
+    setTimeout(() => {  alert(slot1+"\n"+slot2 + " seconds left."+"\n"+slot3+" questions correct" + "\n"+slot4+ " questions wrong."); }, 400);
     }
 
 
@@ -174,11 +184,18 @@ function right() {
 document.querySelector("#rightNotif").innerHTML = "CORRECT!!";
 setTimeout(() => {  document.querySelector("#rightNotif").innerHTML = ""; }, 700);
     }
-
+    var GameEndedlongnumber = 0;
 function gameEnd() {
-    alert("Quiz Over! Your ended with " + secondsLeft + " seconds left. " + rightCount + " questions correct and " + wrongCount + " questions wrong.");
-    var test = prompt("Please enter your initials to save your highscore.","")
-        gameEnded = true;
+    gameEnded = true;
+    GameEndedlongnumber++;
+    if (GameEndedlongnumber == 1) {
+    setTimeout(() => {  var initials = prompt("Please enter your initials to save your highscore.") 
+    localStorage.setItem("initials", JSON.stringify(initials));
+}, 500);
+
+    
+   
+}
     
 }
     // 
