@@ -1,6 +1,6 @@
 # File Description
 
-javascriptQuiz with multiple options written in JavaScript by Nickolas Ferrer
+Javascript 10 second quiz with timer, arrays, localstorage + more by Nickolas Ferrer
 
 ## Deployed Application link
 
