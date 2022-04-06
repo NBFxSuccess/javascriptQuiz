@@ -98,6 +98,17 @@ function startTimer() {
     setInterval(minustimer, 1000);
 }
 
+// Needed to do this because alert() was running first in my highscore function.
+setInterval(save, 50);
+function save() {
+    var slot1 = localStorage.getItem("initials");
+    var slot2 = localStorage.getItem("secondsleft");
+    var slot3 = localStorage.getItem("rightcount");
+    var slot4 = localStorage.getItem("wrongcount");
+    localStorage.setItem("secondsleft", JSON.parse(secondsLeft));
+    localStorage.setItem("rightcount", JSON.parse(rightCount));
+    localStorage.setItem("wrongcount", JSON.parse(wrongCount));
+}
 // Functions full of if statements for each button.  (4 in total.)
 // Answer button 1
 function answer1click() {
@@ -164,18 +175,21 @@ console.log("wrong")
 document.querySelector("#wrongNotif").innerHTML = "WRONG!";
 setTimeout(() => {  document.querySelector("#wrongNotif").innerHTML = ""; }, 700);
 }
-
+// Need to click twice because I used an alert.
 function highscore() {
     var slot1 = localStorage.getItem("initials");
-var slot2 = localStorage.getItem("secondsleft");
-var slot3 = localStorage.getItem("rightcount");
-var slot4 = localStorage.getItem("wrongcount");
+    var slot2 = localStorage.getItem("secondsleft");
+    var slot3 = localStorage.getItem("rightcount");
+    var slot4 = localStorage.getItem("wrongcount");
     localStorage.setItem("secondsleft", JSON.parse(secondsLeft));
     localStorage.setItem("rightcount", JSON.parse(rightCount));
     localStorage.setItem("wrongcount", JSON.parse(wrongCount));
-    setTimeout(() => {  alert(slot1+"\n"+slot2 + " seconds left."+"\n"+slot3+" questions correct" + "\n"+slot4+ " questions wrong."); }, 400);
+    alert(slot1+"\n"+slot2 + " seconds left."+"\n"+slot3+" questions correct" + "\n"+slot4+ " questions wrong.");
+   
     }
+function donothing() {
 
+}
 
     // Function that gets called when right answer happens.
 function right() {
