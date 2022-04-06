@@ -8,7 +8,7 @@ https://nbfxsuccess.github.io/javascriptQuiz/
 
 
 ## Screenshot
-![javascriptQuiz](/assets/img/screenshot.png "Application Screenshot")
+![javascriptQuiz](/assets/img/screenshot.PNG "Application Screenshot")
 
 
 ## License
