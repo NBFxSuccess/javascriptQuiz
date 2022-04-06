@@ -8,7 +8,7 @@ https://nbfxsuccess.github.io/javascriptQuiz/
 
 
 ## Screenshot
-![Password Generator](/assets/img/screenshot.png "Application Screenshot")
+![javascriptQuiz](/assets/img/screenshot.png "Application Screenshot")
 
 
 ## License

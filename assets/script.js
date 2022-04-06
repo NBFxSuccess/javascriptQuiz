@@ -194,7 +194,6 @@ function gameEnd() {
 }, 500);
 
     
-   
 }
     
 }
