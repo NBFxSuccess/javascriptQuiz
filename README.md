@@ -1,6 +1,6 @@
 # File Description
 
-Javascript 10 second quiz with timer, arrays, localstorage + more by Nickolas Ferrer
+Javascript 10 second quiz with timer, arrays, localstorage + more by Nick Ferrer
 
 ## Deployed Application link
 
